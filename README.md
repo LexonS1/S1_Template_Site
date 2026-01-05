@@ -36,6 +36,37 @@ cp .env.example .env.local
 npm run dev
 ```
 
+## Build
+
+**Note:** The build compiles successfully but fails at static generation because Clerk requires environment variables. You must have valid Clerk keys set up before running `npm run build`.
+
+```bash
+npm run build
+```
+
+## CI/CD Setup
+
+This project includes GitHub Actions for CI. To enable builds in CI, you need to add secrets to your GitHub repository:
+
+1. Go to your repo on GitHub
+2. Navigate to **Settings > Secrets and variables > Actions**
+3. Add the following repository secrets:
+
+| Secret Name | Description |
+|-------------|-------------|
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key |
+| `CLERK_SECRET_KEY` | Clerk secret key |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key |
+| `NEXT_PUBLIC_SENTRY_DSN` | Sentry DSN (optional) |
+
+The CI pipeline runs:
+- `npm ci` - Install dependencies
+- `npx biome ci .` - Lint and format check
+- `npx tsc --noEmit` - Type check
+- `npm test` - Run tests
+- `npm run build` - Build the app
+
 ## Project Structure
 
 ```
