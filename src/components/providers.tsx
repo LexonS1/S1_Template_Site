@@ -1,7 +1,7 @@
 "use client";
 
 import { ClerkProvider } from "@clerk/nextjs";
-import { MantineProvider, createTheme } from "@mantine/core";
+import { createTheme, MantineProvider } from "@mantine/core";
 
 const theme = createTheme({
 	primaryColor: "blue",

@@ -1,6 +1,6 @@
 import "@mantine/core/styles.css";
-import { Providers } from "@/components/providers";
 import { ColorSchemeScript } from "@mantine/core";
+import { Providers } from "@/components/providers";
 
 export const metadata = {
 	title: "Next.js Boilerplate",
