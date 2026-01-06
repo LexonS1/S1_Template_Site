@@ -9,6 +9,8 @@ A minimal boilerplate with Next.js 16, Clerk, Supabase, Mantine, and Sentry.
 - **Supabase** - Database
 - **Mantine** - UI components
 - **Sentry** - Error tracking
+- **Vitest** - Unit testing
+- **Playwright** - E2E testing
 
 ## Setup
 
@@ -44,6 +46,32 @@ npm run dev
 npm run build
 ```
 
+## Testing
+
+### Unit Tests (Vitest)
+
+```bash
+npm test              # Run once
+npm run test:watch    # Watch mode
+```
+
+### E2E Tests (Playwright)
+
+```bash
+npm run test:e2e      # Run all browsers
+npm run test:e2e:ui   # Interactive UI mode
+```
+
+To run a specific browser:
+
+```bash
+npm run test:e2e -- --project=chromium
+npm run test:e2e -- --project=firefox
+npm run test:e2e -- --project=webkit
+```
+
+**Note:** E2E tests bypass Clerk authentication in CI environments. See `src/middleware.ts` for details.
+
 ## CI/CD Setup
 
 This project includes GitHub Actions for CI. To enable builds in CI, you need to add secrets to your GitHub repository:
@@ -64,7 +92,8 @@ The CI pipeline runs:
 - `npm ci` - Install dependencies
 - `npx biome ci .` - Lint and format check
 - `npx tsc --noEmit` - Type check
-- `npm test` - Run tests
+- `npm test` - Run unit tests
+- `npm run test:e2e` - Run Playwright e2e tests
 - `npm run build` - Build the app
 
 ## Project Structure
@@ -79,8 +108,11 @@ src/
 │   └── sign-up/            # Clerk sign-up
 ├── components/
 │   └── providers.tsx       # Mantine + Clerk providers
-└── lib/
-    └── supabase.ts         # Supabase client
+├── lib/
+│   └── supabase.ts         # Supabase client
+└── middleware.ts           # Clerk auth middleware
+tests/                      # Unit tests (Vitest)
+e2e/                        # E2E tests (Playwright)
 ```
 
 ## Clerk + Supabase Integration
