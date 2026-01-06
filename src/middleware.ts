@@ -13,6 +13,7 @@ const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"]);
  * 3. Implement proper e2e auth testing (see: https://clerk.com/docs/testing/playwright)
  */
 export default clerkMiddleware(async (auth, req) => {
+	// Bypass auth in CI/test environments
 	if (process.env.CI || process.env.PLAYWRIGHT_TEST) {
 		return NextResponse.next();
 	}
