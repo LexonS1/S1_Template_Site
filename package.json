@@ -18,7 +18,7 @@
 	},
 	"dependencies": {
 		"@clerk/nextjs": "^6.36.7",
-		"@mantine/core": "^7.17.0",
+		"@mantine/core": "^8.3.12",
 		"@mantine/hooks": "^7.17.0",
 		"@sentry/nextjs": "^10.32.1",
 		"@supabase/supabase-js": "^2.49.1",
