@@ -1,7 +1,7 @@
 import { createSupabaseClient } from "@/lib/supabase";
 import { Stack, Text, Title } from "@mantine/core";
 import { unstable_noStore as noStore } from "next/cache";
-import { ForecastManager } from "./_components/ForecastManager";
+import { ForecastManager } from "@/components/forecast/ForecastManager";
 
 export default async function ForecastPage() {
 	noStore();
@@ -23,3 +23,4 @@ export default async function ForecastPage() {
 		</Stack>
 	);
 }
+

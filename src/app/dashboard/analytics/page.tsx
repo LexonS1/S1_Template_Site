@@ -1,6 +1,11 @@
 import { createSupabaseClient } from "@/lib/supabase";
-import { Box, Group, Paper, SimpleGrid, Stack, Text, Title } from "@mantine/core";
+import { SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import { unstable_noStore as noStore } from "next/cache";
+import { CycleTimeChart } from "@/components/analytics/CycleTimeChart";
+import { MetricsCards } from "@/components/analytics/MetricsCards";
+import { PipelineHealth } from "@/components/analytics/PipelineHealth";
+import { RestockPriorities } from "@/components/analytics/RestockPriorities";
+import { WeeklyIntakeChart } from "@/components/analytics/WeeklyIntakeChart";
 
 type SubmissionRow = {
 	created_at: string;
@@ -47,7 +52,9 @@ export default async function AnalyticsPage() {
 	thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
 	const last7Days: Date[] = Array.from({ length: 7 }, (_, index) => {
-		const date = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+		const date = new Date(
+			Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
+		);
 		date.setUTCDate(date.getUTCDate() - (6 - index));
 		return date;
 	});
@@ -158,7 +165,7 @@ export default async function AnalyticsPage() {
 	const mostSoldItem =
 		topItemId && inventoryById.has(topItemId)
 			? inventoryById.get(topItemId)
-			: "—";
+			: "--";
 
 	const restockThreshold = 5;
 	const restockItems = inventoryRows
@@ -180,17 +187,16 @@ export default async function AnalyticsPage() {
 		},
 		{
 			label: "Most sold item",
-			value: mostSoldItem ?? "—",
+			value: mostSoldItem ?? "--",
 			note: topItemCount ? `${topItemCount} units` : "No sales yet",
 		},
 		{
 			label: "Needs restock",
 			value: restockCount.toString(),
-			note: `Qty ≤ ${restockThreshold}`,
+			note: `Qty <= ${restockThreshold}`,
 		},
 	];
 
-	const maxWeekly = Math.max(...weeklyIntake.map((item) => item.value), 1);
 	const maxTrend = Math.max(...cycleTimeTrend, 1);
 	const minTrend = Math.min(...cycleTimeTrend, 0);
 	const trendPoints =
@@ -213,187 +219,19 @@ export default async function AnalyticsPage() {
 					Signal-level performance across intake, ops, and risk queues.
 				</Text>
 			</Stack>
-			<SimpleGrid cols={{ base: 1, sm: 3 }} spacing="md">
-				{metrics.map((metric) => (
-					<Paper key={metric.label} withBorder radius="md" p="md">
-						<Stack gap={4}>
-							<Text c="dimmed" size="sm">
-								{metric.label}
-							</Text>
-							<Text fw={700} size="xl">
-								{metric.value}
-							</Text>
-							<Text size="sm" c="dimmed">
-								{metric.note}
-							</Text>
-						</Stack>
-					</Paper>
-				))}
-			</SimpleGrid>
-
-			<Paper withBorder radius="md" p="lg">
-				<Stack gap="sm">
-					<Group justify="space-between">
-						<Title order={3}>Restock priorities</Title>
-						<Text size="sm" c="dimmed">
-							Top 3 items needing restock
-						</Text>
-					</Group>
-					{restockItems.length === 0 ? (
-						<Text size="sm" c="dimmed">
-							No low-stock items right now.
-						</Text>
-					) : (
-						<SimpleGrid cols={{ base: 1, sm: 3 }} spacing="md">
-							{restockItems.map((item) => (
-								<Paper key={item.id} withBorder radius="md" p="md">
-									<Stack gap={6}>
-										<Text fw={600}>{item.name}</Text>
-										<Text size="sm" c="dimmed">
-											Qty {item.quantity}
-										</Text>
-									</Stack>
-								</Paper>
-							))}
-						</SimpleGrid>
-					)}
-				</Stack>
-			</Paper>
-
+			<MetricsCards metrics={metrics} />
+			<RestockPriorities items={restockItems} />
 			<SimpleGrid cols={{ base: 1, md: 2 }} spacing="md">
-				<Paper withBorder radius="md" p="lg">
-					<Stack gap="sm">
-						<Group justify="space-between">
-							<Title order={3}>Weekly intake</Title>
-							<Text size="sm" c="dimmed">
-								Last 7 days
-							</Text>
-						</Group>
-						<Group align="flex-end" gap="sm" mt="md">
-							{weeklyIntake.map((item) => (
-								<Stack key={item.label} gap={6} align="center">
-									<Box
-										style={{
-											width: 18,
-											height: `${Math.round((item.value / maxWeekly) * 120)}px`,
-											borderRadius: 6,
-											background:
-												"linear-gradient(180deg, rgba(77, 171, 247, 0.9), rgba(77, 171, 247, 0.4))",
-										}}
-									/>
-									<Text size="xs" c="dimmed">
-										{item.label}
-									</Text>
-								</Stack>
-							))}
-						</Group>
-					</Stack>
-				</Paper>
-
-				<Paper withBorder radius="md" p="lg">
-					<Stack gap="sm">
-						<Group justify="space-between">
-							<Title order={3}>Cycle time trend</Title>
-							<Text size="sm" c="dimmed">
-								Days per delivery
-							</Text>
-						</Group>
-						<Box
-							style={{
-								width: "100%",
-								height: 160,
-								borderRadius: 12,
-								background:
-									"linear-gradient(180deg, rgba(16, 24, 48, 0.9), rgba(9, 12, 24, 0.9))",
-								padding: 12,
-								display: "flex",
-								alignItems: "center",
-							}}
-						>
-							{cycleTimeTrend.length === 0 ? (
-								<Text size="sm" c="dimmed">
-									Add forecast items to visualize trend.
-								</Text>
-							) : (
-								<svg
-									viewBox="0 0 280 120"
-									width="100%"
-									height="140"
-									style={{ overflow: "visible" }}
-								>
-									<defs>
-										<linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
-											<stop offset="0%" stopColor="rgba(77, 171, 247, 0.35)" />
-											<stop offset="100%" stopColor="rgba(77, 171, 247, 0)" />
-										</linearGradient>
-									</defs>
-									<polygon
-										fill="url(#trendFill)"
-										points={`0,120 ${trendPoints} 280,120`}
-									/>
-									<polyline
-										fill="none"
-										stroke="rgba(77, 171, 247, 0.45)"
-										strokeWidth="12"
-										points={trendPoints}
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-									<polyline
-										fill="none"
-										stroke="#4dabf7"
-										strokeWidth="3"
-										points={trendPoints}
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
-							)}
-						</Box>
-					</Stack>
-				</Paper>
+				<WeeklyIntakeChart points={weeklyIntake} />
+				<CycleTimeChart
+					points={trendPoints}
+					hasData={cycleTimeTrend.length > 0}
+				/>
 			</SimpleGrid>
-
-			<Paper withBorder radius="md" p="lg">
-				<Stack gap="sm">
-					<Group justify="space-between">
-						<Title order={3}>Pipeline health</Title>
-						<Text size="sm" c="dimmed">
-							Current delivery mix
-						</Text>
-					</Group>
-					<SimpleGrid cols={{ base: 1, sm: 3 }} spacing="md">
-						{statusMix.map((item) => (
-							<Paper key={item.label} withBorder radius="md" p="md">
-								<Stack gap={6}>
-									<Group justify="space-between">
-										<Text size="sm" c="dimmed">
-											{item.label}
-										</Text>
-										<Text fw={600}>{item.value}%</Text>
-									</Group>
-									<Box
-										style={{
-											height: 6,
-											borderRadius: 999,
-											backgroundColor: "rgba(255,255,255,0.08)",
-										}}
-									>
-										<Box
-											style={{
-												height: "100%",
-												width: `${item.value}%`,
-												borderRadius: 999,
-												backgroundColor: item.color,
-											}}
-										/>
-									</Box>
-								</Stack>
-							</Paper>
-						))}
-					</SimpleGrid>
-				</Stack>
-			</Paper>
+			<PipelineHealth items={statusMix} />
 		</Stack>
 	);
 }
+
+
+

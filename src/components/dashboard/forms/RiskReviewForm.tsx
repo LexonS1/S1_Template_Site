@@ -11,8 +11,8 @@ import {
 	TextInput,
 	Textarea,
 } from "@mantine/core";
-import { submitRiskReview } from "../actions";
-import { initialActionState } from "../form-state";
+import { submitRiskReview } from "@/app/dashboard/actions";
+import { initialActionState } from "@/app/dashboard/form-state";
 
 const riskOptions = [
 	{ value: "low", label: "Low - contained impact" },
@@ -84,3 +84,4 @@ export function RiskReviewForm() {
 		</Paper>
 	);
 }
+

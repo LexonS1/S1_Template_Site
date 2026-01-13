@@ -1,7 +1,7 @@
 import { createSupabaseClient } from "@/lib/supabase";
 import { Stack, Text, Title } from "@mantine/core";
 import { unstable_noStore as noStore } from "next/cache";
-import { InventoryManager } from "./_components/InventoryManager";
+import { InventoryManager } from "@/components/inventory/InventoryManager";
 
 export default async function InventoryPage() {
 	noStore();
@@ -23,3 +23,4 @@ export default async function InventoryPage() {
 		</Stack>
 	);
 }
+

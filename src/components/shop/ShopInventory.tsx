@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useMemo, useState } from "react";
 import { Badge, Button, Group, Paper, Stack, Text, Title } from "@mantine/core";
 import { useRouter } from "next/navigation";
-import { sellInventoryItem } from "../actions";
+import { sellInventoryItem } from "@/app/dashboard/shop/actions";
 import { Pagination, SimpleGrid } from "@mantine/core";
 
 type InventoryItem = {
@@ -147,3 +147,4 @@ function ShopRow({ item }: { item: InventoryItem }) {
 		</Paper>
 	);
 }
+

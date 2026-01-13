@@ -1,7 +1,7 @@
 import { Anchor, Group, Stack, Text, Title } from "@mantine/core";
 import Link from "next/link";
-import { IntakeForm } from "../_components/IntakeForm";
-import { SubmissionLog } from "../_components/SubmissionLog";
+import { IntakeForm } from "@/components/dashboard/forms/IntakeForm";
+import { SubmissionLog } from "@/components/dashboard/SubmissionLog";
 
 export default function IntakePage() {
 	return (
@@ -9,7 +9,7 @@ export default function IntakePage() {
 			<Group>
 				<Link href="/dashboard" style={{ textDecoration: "none", color: "inherit" }}>
 					<Anchor component="span" size="sm">
-						← Back to dashboard
+						Back to dashboard
 					</Anchor>
 				</Link>
 			</Group>
@@ -34,3 +34,9 @@ export default function IntakePage() {
 		</Stack>
 	);
 }
+
+
+
+
+
+

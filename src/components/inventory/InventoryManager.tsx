@@ -19,8 +19,8 @@ import {
 	addInventoryItem,
 	deleteInventoryItem,
 	updateInventoryItem,
-} from "../actions";
-import { initialInventoryState } from "../form-state";
+} from "@/app/dashboard/inventory/actions";
+import { initialInventoryState } from "@/app/dashboard/inventory/form-state";
 
 type InventoryItem = {
 	id: string;
@@ -193,7 +193,7 @@ function InventoryRow({ item }: { item: InventoryItem }) {
 							<Badge variant="light">{effectiveStatus}</Badge>
 						</Group>
 						<Text size="sm" c="dimmed">
-							SKU {item.sku} · Qty {item.quantity}
+							SKU {item.sku} | Qty {item.quantity}
 						</Text>
 					</Stack>
 					<Stack gap={4} align="flex-end">
@@ -308,3 +308,4 @@ function InventoryRow({ item }: { item: InventoryItem }) {
 		</Paper>
 	);
 }
+

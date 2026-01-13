@@ -1,7 +1,7 @@
 import { Anchor, Group, Stack, Text, Title } from "@mantine/core";
 import Link from "next/link";
-import { RiskReviewForm } from "../_components/RiskReviewForm";
-import { SubmissionLog } from "../_components/SubmissionLog";
+import { RiskReviewForm } from "@/components/dashboard/forms/RiskReviewForm";
+import { SubmissionLog } from "@/components/dashboard/SubmissionLog";
 
 export default function RiskPage() {
 	return (
@@ -9,7 +9,7 @@ export default function RiskPage() {
 			<Group>
 				<Link href="/dashboard" style={{ textDecoration: "none", color: "inherit" }}>
 					<Anchor component="span" size="sm">
-						← Back to dashboard
+						Back to dashboard
 					</Anchor>
 				</Link>
 			</Group>
@@ -43,3 +43,9 @@ export default function RiskPage() {
 		</Stack>
 	);
 }
+
+
+
+
+
+

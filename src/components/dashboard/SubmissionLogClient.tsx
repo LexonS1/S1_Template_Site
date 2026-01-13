@@ -15,8 +15,8 @@ import {
 	Title,
 } from "@mantine/core";
 import { useRouter } from "next/navigation";
-import { deleteSubmission, updateSubmission } from "../actions";
-import { initialActionState } from "../form-state";
+import { deleteSubmission, updateSubmission } from "@/app/dashboard/actions";
+import { initialActionState } from "@/app/dashboard/form-state";
 
 export type SubmissionField = {
 	name: string;
@@ -40,7 +40,7 @@ type SubmissionLogClientProps = {
 
 function formatValue(value: unknown) {
 	if (value === null || value === undefined) {
-		return "—";
+		return "--";
 	}
 	if (typeof value === "string") {
 		return value;
@@ -198,12 +198,14 @@ function SubmissionEntry({
 									);
 								})}
 							</SimpleGrid>
-							<Group justify="space-between" mt="md">
-								{safeUpdateState.message ? (
-									<Text c={safeUpdateState.ok ? "teal" : "red"} size="sm">
-										{safeUpdateState.message}
-									</Text>
-								) : null}
+							<Group justify="space-between" align="flex-start" mt="md">
+								<Text
+									c={safeUpdateState.ok ? "teal" : "red"}
+									size="sm"
+									style={{ minHeight: 20 }}
+								>
+									{safeUpdateState.message ?? ""}
+								</Text>
 								<Group>
 									<Button
 										variant="default"
@@ -255,3 +257,4 @@ function SubmissionEntry({
 		</Paper>
 	);
 }
+

@@ -10,8 +10,8 @@ import {
 	TextInput,
 	Textarea,
 } from "@mantine/core";
-import { submitIntake } from "../actions";
-import { initialActionState } from "../form-state";
+import { submitIntake } from "@/app/dashboard/actions";
+import { initialActionState } from "@/app/dashboard/form-state";
 
 export function IntakeForm() {
 	const [state, formAction, isPending] = useActionState(
@@ -83,3 +83,4 @@ export function IntakeForm() {
 		</Paper>
 	);
 }
+

@@ -1,7 +1,7 @@
 import { Anchor, Group, Stack, Text, Title } from "@mantine/core";
 import Link from "next/link";
-import { OpsRequestForm } from "../_components/OpsRequestForm";
-import { SubmissionLog } from "../_components/SubmissionLog";
+import { OpsRequestForm } from "@/components/dashboard/forms/OpsRequestForm";
+import { SubmissionLog } from "@/components/dashboard/SubmissionLog";
 
 export default function OpsPage() {
 	return (
@@ -9,7 +9,7 @@ export default function OpsPage() {
 			<Group>
 				<Link href="/dashboard" style={{ textDecoration: "none", color: "inherit" }}>
 					<Anchor component="span" size="sm">
-						← Back to dashboard
+						Back to dashboard
 					</Anchor>
 				</Link>
 			</Group>
@@ -43,3 +43,9 @@ export default function OpsPage() {
 		</Stack>
 	);
 }
+
+
+
+
+
+

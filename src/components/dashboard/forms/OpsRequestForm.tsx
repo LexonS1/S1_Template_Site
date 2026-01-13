@@ -11,8 +11,8 @@ import {
 	TextInput,
 	Textarea,
 } from "@mantine/core";
-import { submitOpsRequest } from "../actions";
-import { initialActionState } from "../form-state";
+import { submitOpsRequest } from "@/app/dashboard/actions";
+import { initialActionState } from "@/app/dashboard/form-state";
 
 const priorityOptions = [
 	{ value: "low", label: "Low - next sprint" },
@@ -83,3 +83,4 @@ export function OpsRequestForm() {
 		</Paper>
 	);
 }
+

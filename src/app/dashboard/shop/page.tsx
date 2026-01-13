@@ -1,7 +1,7 @@
 import { createSupabaseClient } from "@/lib/supabase";
 import { Stack, Text, Title } from "@mantine/core";
 import { unstable_noStore as noStore } from "next/cache";
-import { ShopInventory } from "./_components/ShopInventory";
+import { ShopInventory } from "@/components/shop/ShopInventory";
 
 export default async function ShopPage() {
 	noStore();
@@ -23,3 +23,4 @@ export default async function ShopPage() {
 		</Stack>
 	);
 }
+

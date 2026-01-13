@@ -19,8 +19,8 @@ import {
 	addForecastItem,
 	deleteForecastItem,
 	updateForecastItem,
-} from "../actions";
-import { initialForecastState } from "../form-state";
+} from "@/app/dashboard/forecast/actions";
+import { initialForecastState } from "@/app/dashboard/forecast/form-state";
 
 type ForecastItem = {
 	id: string;
@@ -196,7 +196,7 @@ function ForecastRow({ item }: { item: ForecastItem }) {
 							</Badge>
 						</Group>
 						<Text size="sm" c="dimmed">
-							Owner {item.owner} · Due {item.due_date}
+							Owner {item.owner} | Due {item.due_date}
 						</Text>
 					</Stack>
 					<Stack gap={4} align="flex-end">
@@ -262,12 +262,14 @@ function ForecastRow({ item }: { item: ForecastItem }) {
 									defaultValue={item.notes ?? ""}
 									minRows={3}
 								/>
-								<Group justify="space-between">
-									{safeUpdateState.message ? (
-										<Text c={safeUpdateState.ok ? "teal" : "red"} size="sm">
-											{safeUpdateState.message}
-										</Text>
-									) : null}
+								<Group justify="space-between" align="flex-start">
+									<Text
+										c={safeUpdateState.ok ? "teal" : "red"}
+										size="sm"
+										style={{ minHeight: 20 }}
+									>
+										{safeUpdateState.message ?? ""}
+									</Text>
 									<Group>
 										<Button
 											variant="default"
@@ -309,3 +311,6 @@ function ForecastRow({ item }: { item: ForecastItem }) {
 		</Paper>
 	);
 }
+
+
+
