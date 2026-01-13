@@ -1,14 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server";
-import {
-	Anchor,
-	Badge,
-	Group,
-	Paper,
-	SimpleGrid,
-	Stack,
-	Text,
-	Title,
-} from "@mantine/core";
+import { Anchor, Badge, Group, Paper, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import Link from "next/link";
 
 export default async function DashboardPage() {
@@ -78,22 +69,19 @@ export default async function DashboardPage() {
 							description: "Log incidents, returns, or delays.",
 						},
 					].map((item) => (
-							<Paper key={item.href} withBorder radius="md" p="md">
-								<Stack gap={6}>
-									<Link
-										href={item.href}
-										style={{ textDecoration: "none", color: "inherit" }}
-									>
-										<Anchor component="span" fw={600}>
-											{item.title}
-										</Anchor>
-									</Link>
-									<Text size="sm" c="dimmed">
-										{item.description}
-									</Text>
-								</Stack>
-							</Paper>
-						))}
+						<Paper key={item.href} withBorder radius="md" p="md">
+							<Stack gap={6}>
+								<Link href={item.href} style={{ textDecoration: "none", color: "inherit" }}>
+									<Anchor component="span" fw={600}>
+										{item.title}
+									</Anchor>
+								</Link>
+								<Text size="sm" c="dimmed">
+									{item.description}
+								</Text>
+							</Stack>
+						</Paper>
+					))}
 				</SimpleGrid>
 			</Paper>
 		</Stack>

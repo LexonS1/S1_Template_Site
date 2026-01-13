@@ -3,9 +3,7 @@
 import { createSupabaseClient } from "@/lib/supabase";
 import type { InventoryActionState } from "./form-state";
 
-function buildErrorState(
-	fieldErrors: Record<string, string>,
-): InventoryActionState {
+function buildErrorState(fieldErrors: Record<string, string>): InventoryActionState {
 	return {
 		ok: false,
 		message: "Fix the highlighted fields and try again.",
@@ -46,8 +44,7 @@ export async function addInventoryItem(
 		return buildErrorState(fieldErrors);
 	}
 
-	const nextStatus =
-		quantity === 0 ? "sold_out" : status === "sold_out" ? "active" : status;
+	const nextStatus = quantity === 0 ? "sold_out" : status === "sold_out" ? "active" : status;
 
 	const supabase = createSupabaseClient();
 	const { error } = await supabase.from("inventory_items").insert({
@@ -101,8 +98,7 @@ export async function updateInventoryItem(
 		return buildErrorState(fieldErrors);
 	}
 
-	const nextStatus =
-		quantity === 0 ? "sold_out" : status === "sold_out" ? "active" : status;
+	const nextStatus = quantity === 0 ? "sold_out" : status === "sold_out" ? "active" : status;
 
 	const supabase = createSupabaseClient();
 	const { error } = await supabase

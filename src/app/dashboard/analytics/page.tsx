@@ -1,4 +1,3 @@
-import { createSupabaseClient } from "@/lib/supabase";
 import { SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import { unstable_noStore as noStore } from "next/cache";
 import { CycleTimeChart } from "@/components/analytics/CycleTimeChart";
@@ -6,6 +5,7 @@ import { MetricsCards } from "@/components/analytics/MetricsCards";
 import { PipelineHealth } from "@/components/analytics/PipelineHealth";
 import { RestockPriorities } from "@/components/analytics/RestockPriorities";
 import { WeeklyIntakeChart } from "@/components/analytics/WeeklyIntakeChart";
+import { createSupabaseClient } from "@/lib/supabase";
 
 type SubmissionRow = {
 	created_at: string;
@@ -52,35 +52,26 @@ export default async function AnalyticsPage() {
 	thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
 	const last7Days: Date[] = Array.from({ length: 7 }, (_, index) => {
-		const date = new Date(
-			Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
-		);
+		const date = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 		date.setUTCDate(date.getUTCDate() - (6 - index));
 		return date;
 	});
 
 	const sevenDaysAgo = new Date(last7Days[0]);
 
-	const [
-		{ data: submissions },
-		{ data: forecast },
-		{ data: sales },
-		{ data: inventory },
-	] = await Promise.all([
-		supabase
-			.from("dashboard_submissions")
-			.select("created_at")
-			.gte("created_at", sevenDaysAgo.toISOString()),
-		supabase
-			.from("delivery_forecast")
-			.select("created_at, due_date, status, risk")
-			.limit(200),
-		supabase
-			.from("inventory_sales")
-			.select("item_id, quantity, created_at")
-			.gte("created_at", thirtyDaysAgo.toISOString()),
-		supabase.from("inventory_items").select("id, name, quantity"),
-	]);
+	const [{ data: submissions }, { data: forecast }, { data: sales }, { data: inventory }] =
+		await Promise.all([
+			supabase
+				.from("dashboard_submissions")
+				.select("created_at")
+				.gte("created_at", sevenDaysAgo.toISOString()),
+			supabase.from("delivery_forecast").select("created_at, due_date, status, risk").limit(200),
+			supabase
+				.from("inventory_sales")
+				.select("item_id, quantity, created_at")
+				.gte("created_at", thirtyDaysAgo.toISOString()),
+			supabase.from("inventory_items").select("id, name, quantity"),
+		]);
 
 	const submissionCounts: Record<string, number> = {};
 	for (const date of last7Days) {
@@ -163,16 +154,11 @@ export default async function AnalyticsPage() {
 	}
 	const inventoryById = new Map(inventoryRows.map((row) => [row.id, row.name]));
 	const mostSoldItem =
-		topItemId && inventoryById.has(topItemId)
-			? inventoryById.get(topItemId)
-			: "--";
+		topItemId && inventoryById.has(topItemId) ? inventoryById.get(topItemId) : "--";
 
 	const restockThreshold = 5;
 	const restockItems = inventoryRows
-		.filter(
-			(row) =>
-				typeof row.quantity === "number" && row.quantity <= restockThreshold,
-		)
+		.filter((row) => typeof row.quantity === "number" && row.quantity <= restockThreshold)
 		.sort((a, b) => a.quantity - b.quantity)
 		.slice(0, 3);
 	const restockCount = inventoryRows.filter(
@@ -215,23 +201,15 @@ export default async function AnalyticsPage() {
 		<Stack gap="lg">
 			<Stack gap={4}>
 				<Title order={2}>Analytics</Title>
-				<Text c="dimmed">
-					Signal-level performance across intake, ops, and risk queues.
-				</Text>
+				<Text c="dimmed">Signal-level performance across intake, ops, and risk queues.</Text>
 			</Stack>
 			<MetricsCards metrics={metrics} />
 			<RestockPriorities items={restockItems} />
 			<SimpleGrid cols={{ base: 1, md: 2 }} spacing="md">
 				<WeeklyIntakeChart points={weeklyIntake} />
-				<CycleTimeChart
-					points={trendPoints}
-					hasData={cycleTimeTrend.length > 0}
-				/>
+				<CycleTimeChart points={trendPoints} hasData={cycleTimeTrend.length > 0} />
 			</SimpleGrid>
 			<PipelineHealth items={statusMix} />
 		</Stack>
 	);
 }
-
-
-

@@ -1,10 +1,18 @@
 "use client";
 
+import {
+	Badge,
+	Button,
+	Group,
+	Pagination,
+	Paper,
+	SimpleGrid,
+	Stack,
+	Text,
+	Title,
+} from "@mantine/core";
 import { useActionState, useEffect, useMemo, useState } from "react";
-import { Badge, Button, Group, Paper, Stack, Text, Title } from "@mantine/core";
-import { useRouter } from "next/navigation";
 import { sellInventoryItem } from "@/app/dashboard/shop/actions";
-import { Pagination, SimpleGrid } from "@mantine/core";
 
 type InventoryItem = {
 	id: string;
@@ -50,11 +58,7 @@ export function ShopInventory({ items }: ShopInventoryProps) {
 			</SimpleGrid>
 			{items.length > pageSize ? (
 				<Group justify="center">
-					<Pagination
-						total={totalPages}
-						value={page}
-						onChange={setPage}
-					/>
+					<Pagination total={totalPages} value={page} onChange={setPage} />
 				</Group>
 			) : null}
 		</Stack>
@@ -62,11 +66,7 @@ export function ShopInventory({ items }: ShopInventoryProps) {
 }
 
 function ShopRow({ item }: { item: InventoryItem }) {
-	const router = useRouter();
-	const [state, action, isPending] = useActionState(
-		sellInventoryItem,
-		initialState,
-	);
+	const [state, action, isPending] = useActionState(sellInventoryItem, initialState);
 	const safeState = state ?? initialState;
 	const [displayQty, setDisplayQty] = useState(item.quantity);
 	const [displayStatus, setDisplayStatus] = useState(item.status);
@@ -101,9 +101,7 @@ function ShopRow({ item }: { item: InventoryItem }) {
 				</Group>
 				<form action={action}>
 					<input type="hidden" name="id" value={item.id} />
-					{!isSoldOut ? (
-						<input type="hidden" name="amount" value={sellAmount} />
-					) : null}
+					{!isSoldOut ? <input type="hidden" name="amount" value={sellAmount} /> : null}
 					<Group justify="space-between" align="flex-start">
 						<Text
 							size="sm"
@@ -147,4 +145,3 @@ function ShopRow({ item }: { item: InventoryItem }) {
 		</Paper>
 	);
 }
-

@@ -191,9 +191,15 @@ export async function updateSubmission(
 		};
 	}
 
-	const fieldList = fields.split(",").map((item) => item.trim()).filter(Boolean);
+	const fieldList = fields
+		.split(",")
+		.map((item) => item.trim())
+		.filter(Boolean);
 	const numericList = new Set(
-		numericFields.split(",").map((item) => item.trim()).filter(Boolean),
+		numericFields
+			.split(",")
+			.map((item) => item.trim())
+			.filter(Boolean),
 	);
 
 	const payload: Record<string, unknown> = {};
@@ -229,10 +235,7 @@ export async function updateSubmission(
 	}
 
 	const supabase = createSupabaseClient();
-	const { error } = await supabase
-		.from("dashboard_submissions")
-		.update({ payload })
-		.eq("id", id);
+	const { error } = await supabase.from("dashboard_submissions").update({ payload }).eq("id", id);
 
 	if (error) {
 		return {
@@ -264,10 +267,7 @@ export async function deleteSubmission(
 	}
 
 	const supabase = createSupabaseClient();
-	const { error } = await supabase
-		.from("dashboard_submissions")
-		.delete()
-		.eq("id", id);
+	const { error } = await supabase.from("dashboard_submissions").delete().eq("id", id);
 
 	if (error) {
 		return {

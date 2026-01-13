@@ -15,9 +15,7 @@ export default function RiskPage() {
 			</Group>
 			<Stack gap={4}>
 				<Title order={2}>Issue review</Title>
-				<Text c="dimmed">
-					Log incidents, returns, and delivery blockers early.
-				</Text>
+				<Text c="dimmed">Log incidents, returns, and delivery blockers early.</Text>
 			</Stack>
 			<RiskReviewForm />
 			<SubmissionLog
@@ -43,9 +41,3 @@ export default function RiskPage() {
 		</Stack>
 	);
 }
-
-
-
-
-
-

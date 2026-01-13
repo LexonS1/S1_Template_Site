@@ -1,13 +1,5 @@
 import { UserButton } from "@clerk/nextjs";
-import {
-	Box,
-	Container,
-	Divider,
-	Group,
-	Paper,
-	Stack,
-	Text,
-} from "@mantine/core";
+import { Box, Container, Divider, Group, Paper, Stack, Text } from "@mantine/core";
 import Link from "next/link";
 
 const navSections = [
@@ -55,11 +47,7 @@ const navSections = [
 	},
 ];
 
-export default function DashboardLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<Box
 			style={{

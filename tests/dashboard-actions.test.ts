@@ -1,8 +1,8 @@
-import { describe, expect, it, vi, beforeEach } from "vitest";
-import { submitIntake, updateSubmission, deleteSubmission } from "@/app/dashboard/actions";
+import { auth } from "@clerk/nextjs/server";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { deleteSubmission, submitIntake, updateSubmission } from "@/app/dashboard/actions";
 import { initialActionState } from "@/app/dashboard/form-state";
 import { createSupabaseClient } from "@/lib/supabase";
-import { auth } from "@clerk/nextjs/server";
 
 vi.mock("@/lib/supabase", () => ({
 	createSupabaseClient: vi.fn(),

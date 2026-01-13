@@ -1,7 +1,7 @@
-import { createSupabaseClient } from "@/lib/supabase";
 import { Text } from "@mantine/core";
 import { unstable_noStore as noStore } from "next/cache";
-import { SubmissionLogClient, type SubmissionField } from "./SubmissionLogClient";
+import { createSupabaseClient } from "@/lib/supabase";
+import { type SubmissionField, SubmissionLogClient } from "./SubmissionLogClient";
 
 type SubmissionLogProps = {
 	page: string;

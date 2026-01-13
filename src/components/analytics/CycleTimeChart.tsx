@@ -20,8 +20,7 @@ export function CycleTimeChart({ points, hasData }: CycleTimeChartProps) {
 						width: "100%",
 						height: 160,
 						borderRadius: 12,
-						background:
-							"linear-gradient(180deg, rgba(16, 24, 48, 0.9), rgba(9, 12, 24, 0.9))",
+						background: "linear-gradient(180deg, rgba(16, 24, 48, 0.9), rgba(9, 12, 24, 0.9))",
 						padding: 12,
 						display: "flex",
 						alignItems: "center",
@@ -32,12 +31,8 @@ export function CycleTimeChart({ points, hasData }: CycleTimeChartProps) {
 							Add forecast items to visualize trend.
 						</Text>
 					) : (
-						<svg
-							viewBox="0 0 280 120"
-							width="100%"
-							height="140"
-							style={{ overflow: "visible" }}
-						>
+						<svg viewBox="0 0 280 120" width="100%" height="140" style={{ overflow: "visible" }}>
+							<title>Cycle time trend line</title>
 							<defs>
 								<linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
 									<stop offset="0%" stopColor="rgba(77, 171, 247, 0.35)" />

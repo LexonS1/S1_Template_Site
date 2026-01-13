@@ -15,9 +15,7 @@ export default function IntakePage() {
 			</Group>
 			<Stack gap={4}>
 				<Title order={2}>Vendor intake</Title>
-				<Text c="dimmed">
-					Capture supplier details, catalog changes, and onboarding needs.
-				</Text>
+				<Text c="dimmed">Capture supplier details, catalog changes, and onboarding needs.</Text>
 			</Stack>
 			<IntakeForm />
 			<SubmissionLog
@@ -34,9 +32,3 @@ export default function IntakePage() {
 		</Stack>
 	);
 }
-
-
-
-
-
-

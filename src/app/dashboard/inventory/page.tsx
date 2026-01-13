@@ -1,7 +1,7 @@
-import { createSupabaseClient } from "@/lib/supabase";
 import { Stack, Text, Title } from "@mantine/core";
 import { unstable_noStore as noStore } from "next/cache";
 import { InventoryManager } from "@/components/inventory/InventoryManager";
+import { createSupabaseClient } from "@/lib/supabase";
 
 export default async function InventoryPage() {
 	noStore();
@@ -15,12 +15,9 @@ export default async function InventoryPage() {
 		<Stack gap="xl">
 			<Stack gap={6}>
 				<Title order={1}>Inventory</Title>
-				<Text c="dimmed">
-					Manage deployable assets, hardware kits, and vendor allocations.
-				</Text>
+				<Text c="dimmed">Manage deployable assets, hardware kits, and vendor allocations.</Text>
 			</Stack>
 			<InventoryManager items={data ?? []} />
 		</Stack>
 	);
 }
-

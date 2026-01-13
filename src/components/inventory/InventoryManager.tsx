@@ -1,6 +1,5 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
 import {
 	Badge,
 	Button,
@@ -10,11 +9,12 @@ import {
 	SimpleGrid,
 	Stack,
 	Text,
-	TextInput,
 	Textarea,
+	TextInput,
 	Title,
 } from "@mantine/core";
 import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useRef, useState } from "react";
 import {
 	addInventoryItem,
 	deleteInventoryItem,
@@ -47,10 +47,7 @@ type InventoryManagerProps = {
 export function InventoryManager({ items }: InventoryManagerProps) {
 	const router = useRouter();
 	const [showAddForm, setShowAddForm] = useState(false);
-	const [addState, addAction, addPending] = useActionState(
-		addInventoryItem,
-		initialInventoryState,
-	);
+	const [addState, addAction, addPending] = useActionState(addInventoryItem, initialInventoryState);
 	const safeAddState = addState ?? initialInventoryState;
 	const addFieldErrors = safeAddState.fieldErrors ?? {};
 	const addFormRef = useRef<HTMLFormElement | null>(null);
@@ -200,11 +197,7 @@ function InventoryRow({ item }: { item: InventoryItem }) {
 						<Text size="xs" c="dimmed">
 							ID {item.id.slice(0, 8)}
 						</Text>
-						<Button
-							variant="light"
-							size="xs"
-							onClick={() => setIsEditing((prev) => !prev)}
-						>
+						<Button variant="light" size="xs" onClick={() => setIsEditing((prev) => !prev)}>
 							{isEditing ? "Hide edit" : "Edit"}
 						</Button>
 					</Stack>
@@ -253,18 +246,9 @@ function InventoryRow({ item }: { item: InventoryItem }) {
 										allowDeselect={false}
 									/>
 								</SimpleGrid>
-								<Textarea
-									label="Notes"
-									name="notes"
-									defaultValue={item.notes ?? ""}
-									minRows={3}
-								/>
+								<Textarea label="Notes" name="notes" defaultValue={item.notes ?? ""} minRows={3} />
 								<Group justify="space-between" align="flex-start">
-									<Text
-										c={safeUpdateState.ok ? "teal" : "red"}
-										size="sm"
-										style={{ minHeight: 20 }}
-									>
+									<Text c={safeUpdateState.ok ? "teal" : "red"} size="sm" style={{ minHeight: 20 }}>
 										{safeUpdateState.message ?? ""}
 									</Text>
 									<Group>
@@ -287,12 +271,7 @@ function InventoryRow({ item }: { item: InventoryItem }) {
 						<form action={deleteAction}>
 							<input type="hidden" name="id" value={item.id} />
 							<Group justify="flex-end">
-								<Button
-									type="submit"
-									color="red"
-									variant="light"
-									loading={deletePending}
-								>
+								<Button type="submit" color="red" variant="light" loading={deletePending}>
 									Delete item
 								</Button>
 							</Group>
@@ -308,4 +287,3 @@ function InventoryRow({ item }: { item: InventoryItem }) {
 		</Paper>
 	);
 }
-

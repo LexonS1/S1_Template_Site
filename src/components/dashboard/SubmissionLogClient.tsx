@@ -1,6 +1,5 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
 import {
 	Badge,
 	Button,
@@ -10,11 +9,12 @@ import {
 	SimpleGrid,
 	Stack,
 	Text,
-	TextInput,
 	Textarea,
+	TextInput,
 	Title,
 } from "@mantine/core";
 import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { deleteSubmission, updateSubmission } from "@/app/dashboard/actions";
 import { initialActionState } from "@/app/dashboard/form-state";
 
@@ -51,12 +51,7 @@ function formatValue(value: unknown) {
 	return JSON.stringify(value);
 }
 
-export function SubmissionLogClient({
-	page,
-	title,
-	fields,
-	entries,
-}: SubmissionLogClientProps) {
+export function SubmissionLogClient({ page, title, fields, entries }: SubmissionLogClientProps) {
 	return (
 		<Paper withBorder radius="md" p="lg">
 			<Stack gap="md">
@@ -138,11 +133,7 @@ function SubmissionEntry({
 						<Text size="xs" c="dimmed">
 							ID {entry.id.slice(0, 8)}
 						</Text>
-						<Button
-							size="xs"
-							variant="light"
-							onClick={() => setIsEditing((prev) => !prev)}
-						>
+						<Button size="xs" variant="light" onClick={() => setIsEditing((prev) => !prev)}>
 							{isEditing ? "Hide edit" : "Edit"}
 						</Button>
 					</Group>
@@ -199,11 +190,7 @@ function SubmissionEntry({
 								})}
 							</SimpleGrid>
 							<Group justify="space-between" align="flex-start" mt="md">
-								<Text
-									c={safeUpdateState.ok ? "teal" : "red"}
-									size="sm"
-									style={{ minHeight: 20 }}
-								>
+								<Text c={safeUpdateState.ok ? "teal" : "red"} size="sm" style={{ minHeight: 20 }}>
 									{safeUpdateState.message ?? ""}
 								</Text>
 								<Group>
@@ -225,12 +212,7 @@ function SubmissionEntry({
 						<form action={deleteAction}>
 							<input type="hidden" name="id" value={entry.id} />
 							<Group justify="flex-end">
-								<Button
-									type="submit"
-									color="red"
-									variant="light"
-									loading={deletePending}
-								>
+								<Button type="submit" color="red" variant="light" loading={deletePending}>
 									Delete entry
 								</Button>
 							</Group>
@@ -257,4 +239,3 @@ function SubmissionEntry({
 		</Paper>
 	);
 }
-

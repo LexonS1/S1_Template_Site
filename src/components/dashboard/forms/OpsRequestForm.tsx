@@ -1,16 +1,7 @@
 "use client";
 
+import { Button, Group, Paper, Select, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { useActionState, useEffect, useRef } from "react";
-import {
-	Button,
-	Group,
-	Paper,
-	Select,
-	Stack,
-	Text,
-	TextInput,
-	Textarea,
-} from "@mantine/core";
 import { submitOpsRequest } from "@/app/dashboard/actions";
 import { initialActionState } from "@/app/dashboard/form-state";
 
@@ -22,10 +13,7 @@ const priorityOptions = [
 ];
 
 export function OpsRequestForm() {
-	const [state, formAction, isPending] = useActionState(
-		submitOpsRequest,
-		initialActionState,
-	);
+	const [state, formAction, isPending] = useActionState(submitOpsRequest, initialActionState);
 	const formRef = useRef<HTMLFormElement | null>(null);
 
 	useEffect(() => {
@@ -83,4 +71,3 @@ export function OpsRequestForm() {
 		</Paper>
 	);
 }
-

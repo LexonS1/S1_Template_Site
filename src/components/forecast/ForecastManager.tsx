@@ -1,6 +1,5 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
 import {
 	Badge,
 	Button,
@@ -10,11 +9,12 @@ import {
 	SimpleGrid,
 	Stack,
 	Text,
-	TextInput,
 	Textarea,
+	TextInput,
 	Title,
 } from "@mantine/core";
 import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useRef, useState } from "react";
 import {
 	addForecastItem,
 	deleteForecastItem,
@@ -53,10 +53,7 @@ type ForecastManagerProps = {
 export function ForecastManager({ items }: ForecastManagerProps) {
 	const router = useRouter();
 	const [showAddForm, setShowAddForm] = useState(false);
-	const [addState, addAction, addPending] = useActionState(
-		addForecastItem,
-		initialForecastState,
-	);
+	const [addState, addAction, addPending] = useActionState(addForecastItem, initialForecastState);
 	const safeAddState = addState ?? initialForecastState;
 	const addFieldErrors = safeAddState.fieldErrors ?? {};
 	const addFormRef = useRef<HTMLFormElement | null>(null);
@@ -203,11 +200,7 @@ function ForecastRow({ item }: { item: ForecastItem }) {
 						<Text size="xs" c="dimmed">
 							ID {item.id.slice(0, 8)}
 						</Text>
-						<Button
-							variant="light"
-							size="xs"
-							onClick={() => setIsEditing((prev) => !prev)}
-						>
+						<Button variant="light" size="xs" onClick={() => setIsEditing((prev) => !prev)}>
 							{isEditing ? "Hide edit" : "Edit"}
 						</Button>
 					</Stack>
@@ -256,18 +249,9 @@ function ForecastRow({ item }: { item: ForecastItem }) {
 										allowDeselect={false}
 									/>
 								</SimpleGrid>
-								<Textarea
-									label="Notes"
-									name="notes"
-									defaultValue={item.notes ?? ""}
-									minRows={3}
-								/>
+								<Textarea label="Notes" name="notes" defaultValue={item.notes ?? ""} minRows={3} />
 								<Group justify="space-between" align="flex-start">
-									<Text
-										c={safeUpdateState.ok ? "teal" : "red"}
-										size="sm"
-										style={{ minHeight: 20 }}
-									>
+									<Text c={safeUpdateState.ok ? "teal" : "red"} size="sm" style={{ minHeight: 20 }}>
 										{safeUpdateState.message ?? ""}
 									</Text>
 									<Group>
@@ -290,12 +274,7 @@ function ForecastRow({ item }: { item: ForecastItem }) {
 						<form action={deleteAction}>
 							<input type="hidden" name="id" value={item.id} />
 							<Group justify="flex-end">
-								<Button
-									type="submit"
-									color="red"
-									variant="light"
-									loading={deletePending}
-								>
+								<Button type="submit" color="red" variant="light" loading={deletePending}>
 									Delete item
 								</Button>
 							</Group>
@@ -311,6 +290,3 @@ function ForecastRow({ item }: { item: ForecastItem }) {
 		</Paper>
 	);
 }
-
-
-

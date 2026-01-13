@@ -1,7 +1,7 @@
-import { createSupabaseClient } from "@/lib/supabase";
 import { Stack, Text, Title } from "@mantine/core";
 import { unstable_noStore as noStore } from "next/cache";
 import { ShopInventory } from "@/components/shop/ShopInventory";
+import { createSupabaseClient } from "@/lib/supabase";
 
 export default async function ShopPage() {
 	noStore();
@@ -15,12 +15,9 @@ export default async function ShopPage() {
 		<Stack gap="lg">
 			<Stack gap={4}>
 				<Title order={2}>Shop</Title>
-				<Text c="dimmed">
-					Sell through inventory and mark items sold out when stock hits zero.
-				</Text>
+				<Text c="dimmed">Sell through inventory and mark items sold out when stock hits zero.</Text>
 			</Stack>
 			<ShopInventory items={data ?? []} />
 		</Stack>
 	);
 }
-

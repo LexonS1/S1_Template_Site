@@ -3,9 +3,7 @@
 import { createSupabaseClient } from "@/lib/supabase";
 import type { ForecastActionState } from "./form-state";
 
-function buildErrorState(
-	fieldErrors: Record<string, string>,
-): ForecastActionState {
+function buildErrorState(fieldErrors: Record<string, string>): ForecastActionState {
 	return {
 		ok: false,
 		message: "Fix the highlighted fields and try again.",

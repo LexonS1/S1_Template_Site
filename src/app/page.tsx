@@ -1,14 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
-import {
-	Anchor,
-	Container,
-	Group,
-	Paper,
-	SimpleGrid,
-	Stack,
-	Text,
-	Title,
-} from "@mantine/core";
+import { Anchor, Container, Group, Paper, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -27,9 +18,7 @@ export default async function Home() {
 			<Stack gap="xl" mt={60}>
 				<Stack gap="xs">
 					<Title order={1}>Store Command</Title>
-					<Text c="dimmed">
-						A retail operations hub for inventory, vendors, and fulfillment.
-					</Text>
+					<Text c="dimmed">A retail operations hub for inventory, vendors, and fulfillment.</Text>
 				</Stack>
 
 				<Group>
@@ -75,10 +64,7 @@ export default async function Home() {
 							].map((item) => (
 								<Paper key={item.href} withBorder radius="md" p="md">
 									<Stack gap={6}>
-										<Link
-											href={item.href}
-											style={{ textDecoration: "none", color: "inherit" }}
-										>
+										<Link href={item.href} style={{ textDecoration: "none", color: "inherit" }}>
 											<Anchor component="span" fw={600}>
 												{item.title}
 											</Anchor>

@@ -1,23 +1,12 @@
 "use client";
 
+import { Button, Group, Paper, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { useActionState, useEffect, useRef } from "react";
-import {
-	Button,
-	Group,
-	Paper,
-	Stack,
-	Text,
-	TextInput,
-	Textarea,
-} from "@mantine/core";
 import { submitIntake } from "@/app/dashboard/actions";
 import { initialActionState } from "@/app/dashboard/form-state";
 
 export function IntakeForm() {
-	const [state, formAction, isPending] = useActionState(
-		submitIntake,
-		initialActionState,
-	);
+	const [state, formAction, isPending] = useActionState(submitIntake, initialActionState);
 	const formRef = useRef<HTMLFormElement | null>(null);
 
 	useEffect(() => {
@@ -83,4 +72,3 @@ export function IntakeForm() {
 		</Paper>
 	);
 }
-

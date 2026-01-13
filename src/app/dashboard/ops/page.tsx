@@ -15,9 +15,7 @@ export default function OpsPage() {
 			</Group>
 			<Stack gap={4}>
 				<Title order={2}>Store request</Title>
-				<Text c="dimmed">
-					Request replenishments, merchandising, or store services.
-				</Text>
+				<Text c="dimmed">Request replenishments, merchandising, or store services.</Text>
 			</Stack>
 			<OpsRequestForm />
 			<SubmissionLog
@@ -43,9 +41,3 @@ export default function OpsPage() {
 		</Stack>
 	);
 }
-
-
-
-
-
-
