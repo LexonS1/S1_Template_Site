@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<head>
 				<ColorSchemeScript />
 			</head>
-			<body>
+			<body style={{ backgroundColor: "#0f1b2e" }}>
 				<Providers>{children}</Providers>
 			</body>
 		</html>

@@ -23,7 +23,7 @@ export async function GET() {
 				Authorization: `Bearer ${supabaseAnonKey}`,
 			},
 			cache: "no-store",
-		});
+		}); 
 
 		const body = await res.text();
 
